@@ -29,6 +29,7 @@ public class AsyncTaskTraitementImage extends AsyncTask<ImageView, Bitmap, Image
     {
 
         Bitmap bit = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        bit = bit.copy(bit.getConfig(), true);
 
         for (int i = 0 ; i < bit.getHeight() ; i ++)
         {

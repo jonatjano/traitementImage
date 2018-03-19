@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
 		ImageView iv = findViewById(R.id.image1);
 		iv.setImageDrawable(image);
 
-		new AsyncTaskTraitementImage((TextView) findViewById(R.id.infoView)).execute();
+		new AsyncTaskTraitementImage((TextView) findViewById(R.id.infoView), iv).execute();
 	}
 
 	public void changeImage(View v)
