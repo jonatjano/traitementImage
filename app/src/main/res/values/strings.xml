@@ -2,4 +2,6 @@
     <string name="app_name">traitement d'image</string>
     <string name="processImage">Traiter l'image</string>
     <string name="changeImage">changer d'image</string>
+    <string name="progress_start">démarrage en cours...</string>
+    <string name="progress_end">-</string>
 </resources>
