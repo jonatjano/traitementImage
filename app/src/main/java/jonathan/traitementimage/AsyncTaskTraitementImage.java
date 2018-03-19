@@ -7,14 +7,16 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AsyncTaskTraitementImage extends AsyncTask<ImageView, ImageView, ImageView>
+public class AsyncTaskTraitementImage extends AsyncTask<ImageView, Bitmap, ImageView>
 {
 
     TextView infoView;
+    ImageView image;
 
-    public AsyncTaskTraitementImage(TextView infoView)
+    public AsyncTaskTraitementImage(TextView infoView, ImageView image)
     {
         this.infoView = infoView;
+        this.image = image;
     }
 
     @Override
@@ -25,13 +27,12 @@ public class AsyncTaskTraitementImage extends AsyncTask<ImageView, ImageView, Im
     @Override
     protected ImageView doInBackground(ImageView... imageView)
     {
-        ImageView image = imageView[0];
 
         Bitmap bit = ((BitmapDrawable)image.getDrawable()).getBitmap();
 
         for (int i = 0 ; i < bit.getHeight() ; i ++)
-            for (int j = 0 ; j < bit.getWidth() ; i++)
-            {
+        {
+            for (int j = 0; j < bit.getWidth(); i++) {
                 int pixel = bit.getPixel(i, j);
                 int red = Color.red(pixel);
                 int green = Color.green(pixel);
@@ -40,13 +41,16 @@ public class AsyncTaskTraitementImage extends AsyncTask<ImageView, ImageView, Im
 
                 bit.setPixel(i, j, Color.argb(alpha, blue, red, green));
             }
+            publishProgress(bit);
+        }
+
 
         return image;
     }
 
     @Override
-    protected void onProgressUpdate(ImageView... imageView) {
-        super.onProgressUpdate(imageView);
+    protected void onProgressUpdate(Bitmap... bitmap) {
+        image.setImageBitmap(bitmap[0]);
     }
 
     protected void onPostExecute(ImageView imageView) {

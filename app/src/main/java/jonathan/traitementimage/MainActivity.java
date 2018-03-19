@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity
 
 	public void processImage(View v)
 	{
-
 	}
 
 	public void changeImage(View v)
