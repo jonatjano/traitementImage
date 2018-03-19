@@ -21,7 +21,7 @@
     <ImageView
         android:id="@+id/image1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <Button
         android:layout_width="match_parent"
@@ -32,6 +32,6 @@
     <ImageView
         android:id="@+id/image2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
