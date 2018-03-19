@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">traitement d'image</string>
-    <string name="processImage">Traiter l'image</string>
-    <string name="changeImage">changer d'image</string>
+    <string name="app_name">traitement d\'image</string>
+    <string name="processImage">Traiter l\'image</string>
+    <string name="changeImage">changer d\'image</string>
 </resources>
