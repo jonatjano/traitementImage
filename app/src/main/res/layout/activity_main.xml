@@ -13,13 +13,13 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/image1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/processImage"
         android:onClick="processImage"/>
 
     <ImageView
+        android:id="@+id/image1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
