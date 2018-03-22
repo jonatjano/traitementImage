@@ -7,13 +7,13 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AsyncTaskTraitementImage extends AsyncTask<ImageView, Bitmap, ImageView>
+public abstract class AsyncTaskAbstractProcess extends AsyncTask<ImageView, Bitmap, ImageView>
 {
 
     TextView infoView;
     ImageView image;
 
-    public AsyncTaskTraitementImage(TextView infoView, ImageView image)
+    public AsyncTaskAbstractProcess(TextView infoView, ImageView image)
     {
         this.infoView = infoView;
         this.image = image;
@@ -33,18 +33,13 @@ public class AsyncTaskTraitementImage extends AsyncTask<ImageView, Bitmap, Image
 
         for (int i = 0 ; i < bit.getHeight() ; i ++)
         {
-            for (int j = 0; j < bit.getWidth(); i++) {
-                int pixel = bit.getPixel(i, j);
-                int red = Color.red(pixel);
-                int green = Color.green(pixel);
-                int blue = Color.blue(pixel);
-                int alpha = Color.alpha(pixel);
+            for (int j = 0; j < bit.getWidth(); j++) {
+                int pixel = bit.getPixel(j, i);
 
-                bit.setPixel(i, j, Color.argb(alpha, blue, red, green));
+                bit.setPixel(j, i, getPixelNewColor(pixel));
             }
             publishProgress(bit);
         }
-
 
         return image;
     }
@@ -58,4 +53,5 @@ public class AsyncTaskTraitementImage extends AsyncTask<ImageView, Bitmap, Image
         infoView.setText(R.string.progress_end);
     }
 
+	protected abstract int getPixelNewColor(int pixel);
 }
