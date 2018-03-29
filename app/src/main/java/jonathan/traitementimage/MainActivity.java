@@ -98,8 +98,13 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onRestoreInstanceState(savedInstanceState);
 
-		xActuel = savedInstanceState.getInt("xActuel");
-		yActuel = savedInstanceState.getInt("yActuel");
+		int xActuel = savedInstanceState.getInt("xActuel");
+		int yActuel = savedInstanceState.getInt("yActuel");
+
+		if (xActuel != -1 && yActuel != -1)
+		{
+			processImage(xActuel, yActuel);
+		}
 
 		imageId = savedInstanceState.getInt("imageId");
 
