@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity
 {
 	private int imageId = 1;
 
-	public int yActuel = -1;
+	int yActuel = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
