@@ -3,15 +3,21 @@ package jonathan.traitementimage;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
 {
 	private int imageId = 1;
+
+	private List<AsyncTask> arTask = new ArrayList<AsyncTask>();
 
 	int yActuel = -1;
 
@@ -26,6 +32,13 @@ public class MainActivity extends AppCompatActivity
 		iv.setImageDrawable(image);
 		iv = findViewById(R.id.image2);
 		iv.setImageDrawable(image);
+	}
+
+	@Override
+	protected void onPause()
+	{
+		for (AsyncTask at : arTask)
+			at.cancel(true);
 	}
 
 	public void processImage(View v)
@@ -52,7 +65,7 @@ public class MainActivity extends AppCompatActivity
 
 		if ( yDep < ((BitmapDrawable)iv.getDrawable()).getBitmap().getHeight())
 		{
-			new AsyncTaskGBRProcess((TextView) findViewById(R.id.infoView), iv, this, yDep).execute();
+			arTask.add(new AsyncTaskGBRProcess((TextView) findViewById(R.id.infoView), iv, this, yDep).execute());
 			yDep = 0;
 		}
 		else
@@ -60,7 +73,7 @@ public class MainActivity extends AppCompatActivity
 
 		iv = findViewById(R.id.image2);
 
-		new AsyncTaskNegativeProcess((TextView) findViewById(R.id.infoView), iv, this, yDep).execute();
+		arTask.add(new AsyncTaskNegativeProcess((TextView) findViewById(R.id.infoView), iv, this, yDep).execute());
 	}
 
 	public void changeImage(View v)
