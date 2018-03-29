@@ -15,9 +15,9 @@ public class AsyncTaskGBRProcess extends AsyncTaskAbstractProcess
 		super(infoView, image, mainActivity);
 	}
 
-	public AsyncTaskGBRProcess(TextView infoView, ImageView image, MainActivity mainActivity, int xDep, int yDep)
+	public AsyncTaskGBRProcess(TextView infoView, ImageView image, MainActivity mainActivity, int yDep)
 	{
-		super(infoView, image, mainActivity, xDep, yDep);
+		super(infoView, image, mainActivity, yDep);
 	}
 
 	@Override

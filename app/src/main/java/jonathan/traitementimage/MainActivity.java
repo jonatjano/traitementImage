@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity
 {
 	private int imageId = 1;
 
-	public int xActuel = -1;
 	public int yActuel = -1;
 
 	@Override
@@ -31,10 +30,10 @@ public class MainActivity extends AppCompatActivity
 
 	public void processImage(View v)
 	{
-		this.processImage(0,0);
+		this.processImage(0);
 	}
 
-	public synchronized void processImage(int xDep, int yDep)
+	public synchronized void processImage(int yDep)
 	{
 		String idNum;
 		if (imageId < 10)
@@ -53,15 +52,15 @@ public class MainActivity extends AppCompatActivity
 
 		if ( yDep < ((BitmapDrawable)iv.getDrawable()).getBitmap().getHeight())
 		{
-			new AsyncTaskGBRProcess((TextView) findViewById(R.id.infoView), iv, this, xDep, yDep).execute();
-			xDep = yDep = 0;
+			new AsyncTaskGBRProcess((TextView) findViewById(R.id.infoView), iv, this, yDep).execute();
+			yDep = 0;
 		}
 		else
 			yDep -= ((BitmapDrawable)iv.getDrawable()).getBitmap().getHeight();
 
 		iv = findViewById(R.id.image2);
 
-		new AsyncTaskNegativeProcess((TextView) findViewById(R.id.infoView), iv, this, xDep, yDep).execute();
+		new AsyncTaskNegativeProcess((TextView) findViewById(R.id.infoView), iv, this, yDep).execute();
 	}
 
 	public void changeImage(View v)
@@ -98,12 +97,11 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onRestoreInstanceState(savedInstanceState);
 
-		int xActuel = savedInstanceState.getInt("xActuel");
 		int yActuel = savedInstanceState.getInt("yActuel");
 
-		if (xActuel != -1 && yActuel != -1)
+		if (yActuel != -1)
 		{
-			processImage(xActuel, yActuel);
+			processImage(yActuel);
 		}
 
 		imageId = savedInstanceState.getInt("imageId");
@@ -120,7 +118,6 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	protected void onSaveInstanceState(Bundle outState)
 	{
-		outState.putInt("xActuel", xActuel);
 		outState.putInt("yActuel", yActuel);
 
 		outState.putInt("imageId", imageId);

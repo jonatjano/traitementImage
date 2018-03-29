@@ -13,20 +13,18 @@ public abstract class AsyncTaskAbstractProcess extends AsyncTask<ImageView, Bitm
     MainActivity mainActivity;
     TextView infoView;
     ImageView image;
-    int xDep;
     int yDep;
 
     public AsyncTaskAbstractProcess(TextView infoView, ImageView image, MainActivity mainActivity)
     {
-        this(infoView, image, mainActivity, 0, 0);
+        this(infoView, image, mainActivity, 0);
     }
 
-    public AsyncTaskAbstractProcess(TextView infoView, ImageView image, MainActivity mainActivity, int xDep, int yDep)
+    public AsyncTaskAbstractProcess(TextView infoView, ImageView image, MainActivity mainActivity, int yDep)
     {
         this.mainActivity = mainActivity;
         this.infoView = infoView;
         this.image = image;
-        this.xDep = xDep;
         this.yDep = yDep;
     }
 
@@ -45,13 +43,11 @@ public abstract class AsyncTaskAbstractProcess extends AsyncTask<ImageView, Bitm
         for (int i = yDep ; i < bit.getHeight() ; i ++)
         {
             mainActivity.yActuel++;
-            for (int j = xDep; j < bit.getWidth(); j++) {
+            for (int j = 0; j < bit.getWidth(); j++) {
                 int pixel = bit.getPixel(j, i);
 
-                mainActivity.xActuel++;
                 bit.setPixel(j, i, getPixelNewColor(pixel));
             }
-            xDep = 0;
             publishProgress(bit);
         }
 

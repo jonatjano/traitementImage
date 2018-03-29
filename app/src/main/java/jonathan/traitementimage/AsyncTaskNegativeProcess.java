@@ -16,15 +16,14 @@ public class AsyncTaskNegativeProcess extends AsyncTaskAbstractProcess
 		super(infoView, image, mainActivity);
 	}
 
-	public AsyncTaskNegativeProcess(TextView infoView, ImageView image, MainActivity mainActivity, int xDep, int yDep)
+	public AsyncTaskNegativeProcess(TextView infoView, ImageView image, MainActivity mainActivity, int yDep)
 	{
-		super(infoView, image, mainActivity, xDep, yDep);
+		super(infoView, image, mainActivity, yDep);
 	}
 
 	protected ImageView doInBackground(ImageView... imageView)
 	{
 		ImageView iv = super.doInBackground(imageView);
-		mainActivity.xActuel = -1;
 		mainActivity.yActuel = -1;
 		return iv;
 	}
