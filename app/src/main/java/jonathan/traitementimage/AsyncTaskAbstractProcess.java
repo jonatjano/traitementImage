@@ -44,11 +44,11 @@ public abstract class AsyncTaskAbstractProcess extends AsyncTask<ImageView, Bitm
 
         for (int i = yDep ; i < bit.getHeight() ; i ++)
         {
-            mainActivity.yActuel = i;
+            mainActivity.yActuel++;
             for (int j = xDep; j < bit.getWidth(); j++) {
                 int pixel = bit.getPixel(j, i);
 
-                mainActivity.xActuel = j;
+                mainActivity.xActuel++;
                 bit.setPixel(j, i, getPixelNewColor(pixel));
             }
             xDep = 0;

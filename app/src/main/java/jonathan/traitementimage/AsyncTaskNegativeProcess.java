@@ -21,6 +21,14 @@ public class AsyncTaskNegativeProcess extends AsyncTaskAbstractProcess
 		super(infoView, image, mainActivity, xDep, yDep);
 	}
 
+	protected ImageView doInBackground(ImageView... imageView)
+	{
+		ImageView iv = super.doInBackground(imageView);
+		mainActivity.xActuel = -1;
+		mainActivity.yActuel = -1;
+		return iv;
+	}
+
 	@Override
 	protected int getPixelNewColor(int pixel)
 	{
