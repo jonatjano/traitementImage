@@ -10,9 +10,14 @@ import android.widget.TextView;
 
 public class AsyncTaskGBRProcess extends AsyncTaskAbstractProcess
 {
-	public AsyncTaskGBRProcess(TextView infoView, ImageView image)
+	public AsyncTaskGBRProcess(TextView infoView, ImageView image, MainActivity mainActivity)
 	{
-		super(infoView, image);
+		super(infoView, image, mainActivity);
+	}
+
+	public AsyncTaskGBRProcess(TextView infoView, ImageView image, MainActivity mainActivity, int xDep, int yDep)
+	{
+		super(infoView, image, mainActivity, xDep, yDep);
 	}
 
 	@Override

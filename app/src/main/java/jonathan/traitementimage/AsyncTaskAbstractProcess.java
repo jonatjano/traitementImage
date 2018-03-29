@@ -10,13 +10,24 @@ import android.widget.TextView;
 public abstract class AsyncTaskAbstractProcess extends AsyncTask<ImageView, Bitmap, ImageView>
 {
 
+    MainActivity mainActivity;
     TextView infoView;
     ImageView image;
+    int xDep;
+    int yDep;
 
-    public AsyncTaskAbstractProcess(TextView infoView, ImageView image)
+    public AsyncTaskAbstractProcess(TextView infoView, ImageView image, MainActivity mainActivity)
     {
+        this(infoView, image, mainActivity, 0, 0);
+    }
+
+    public AsyncTaskAbstractProcess(TextView infoView, ImageView image, MainActivity mainActivity, int xDep, int yDep)
+    {
+        this.mainActivity = mainActivity;
         this.infoView = infoView;
         this.image = image;
+        this.xDep = xDep;
+        this.yDep = yDep;
     }
 
     @Override
@@ -31,13 +42,16 @@ public abstract class AsyncTaskAbstractProcess extends AsyncTask<ImageView, Bitm
         Bitmap bit = ((BitmapDrawable)image.getDrawable()).getBitmap();
         bit = bit.copy(bit.getConfig(), true);
 
-        for (int i = 0 ; i < bit.getHeight() ; i ++)
+        for (int i = yDep ; i < bit.getHeight() ; i ++)
         {
-            for (int j = 0; j < bit.getWidth(); j++) {
+            mainActivity.yActuel = i;
+            for (int j = xDep; j < bit.getWidth(); j++) {
                 int pixel = bit.getPixel(j, i);
 
+                mainActivity.xActuel = j;
                 bit.setPixel(j, i, getPixelNewColor(pixel));
             }
+            xDep = 0;
             publishProgress(bit);
         }
 
