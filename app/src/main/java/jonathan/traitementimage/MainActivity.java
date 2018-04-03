@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	protected void onPause()
 	{
+		super.onPause();
 		for (AsyncTask at : arTask)
 			at.cancel(true);
 	}
