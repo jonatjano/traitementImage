@@ -11,21 +11,14 @@ import android.widget.TextView;
 public class AsyncTaskNegativeProcess extends AsyncTaskAbstractProcess
 {
 
-	public AsyncTaskNegativeProcess(TextView infoView, ImageView image, MainActivity mainActivity)
+	public AsyncTaskNegativeProcess(TextView infoView,MainActivity mainActivity)
 	{
-		super(infoView, image, mainActivity);
+		super(infoView, mainActivity);
 	}
 
-	public AsyncTaskNegativeProcess(TextView infoView, ImageView image, MainActivity mainActivity, int yDep)
+	public AsyncTaskNegativeProcess(TextView infoView,MainActivity mainActivity, int xDep, int yDep, int image)
 	{
-		super(infoView, image, mainActivity, yDep);
-	}
-
-	protected ImageView doInBackground(ImageView... imageView)
-	{
-		ImageView iv = super.doInBackground(imageView);
-		mainActivity.yActuel = -1;
-		return iv;
+		super(infoView, mainActivity, xDep, yDep, image);
 	}
 
 	@Override

@@ -31,6 +31,7 @@
 
     <ImageView
         android:id="@+id/image2"
+        android:onClick="clickImage2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

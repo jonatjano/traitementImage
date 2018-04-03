@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity
 
 	private List<AsyncTask> arTask = new ArrayList<AsyncTask>();
 
-	int yActuel = -1;
+	String imageActuelle = "-1";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -44,37 +44,35 @@ public class MainActivity extends AppCompatActivity
 
 	public void processImage(View v)
 	{
-		this.processImage(0);
+		this.processImage(0, 0, 1);
 	}
 
-	public synchronized void processImage(int yDep)
+	public void clickImage2(View v)
 	{
-		String idNum;
-		if (imageId < 10)
+		this.processImage(0, 0, 2);
+	}
+
+	public synchronized void processImage(int xDep, int yDep, int imageActuelle)
+	{
+		if (imageActuelle == 1)
 		{
-			idNum = "0" + imageId;
+			((ImageView)findViewById(R.id.image1)).setImageDrawable(getDrawable(getResources().getIdentifier(String.format("image%02d",imageId), "drawable", getPackageName())));
+			processGBRImage(xDep, yDep);
 		}
 		else
 		{
-			idNum = "" + imageId;
+			processNegativeImage(xDep, yDep);
 		}
+	}
 
-		Drawable image = getDrawable(getResources().getIdentifier("image" + idNum, "drawable", getPackageName()));
-		ImageView iv = findViewById(R.id.image1);
-		iv.setImageDrawable(image);
+	public void processGBRImage(int xDep, int yDep)
+	{
+		arTask.add(new AsyncTaskGBRProcess((TextView) findViewById(R.id.infoView), this, xDep, yDep, 1).execute());
+	}
 
-
-		if ( yDep < ((BitmapDrawable)iv.getDrawable()).getBitmap().getHeight())
-		{
-			arTask.add(new AsyncTaskGBRProcess((TextView) findViewById(R.id.infoView), iv, this, yDep).execute());
-			yDep = 0;
-		}
-		else
-			yDep -= ((BitmapDrawable)iv.getDrawable()).getBitmap().getHeight();
-
-		iv = findViewById(R.id.image2);
-
-		arTask.add(new AsyncTaskNegativeProcess((TextView) findViewById(R.id.infoView), iv, this, yDep).execute());
+	public void processNegativeImage(int xDep, int yDep)
+	{
+		arTask.add(new AsyncTaskNegativeProcess((TextView) findViewById(R.id.infoView), this, xDep, yDep, 2).execute());
 	}
 
 	public void changeImage(View v)
@@ -111,11 +109,16 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onRestoreInstanceState(savedInstanceState);
 
-		int yActuel = savedInstanceState.getInt("yActuel");
+		String imageActuelle = savedInstanceState.getString("imageActuelle");
 
-		if (yActuel != -1)
+		if (!imageActuelle.equals("-1"))
 		{
-			processImage(yActuel);
+			ImageView iv = null;
+
+			String[] info = imageActuelle.split(":");
+
+			System.out.println(imageActuelle);
+			processImage(Integer.parseInt(info[1])+1, Integer.parseInt(info[2]), Integer.parseInt(info[0]));
 		}
 
 		imageId = savedInstanceState.getInt("imageId");
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	protected void onSaveInstanceState(Bundle outState)
 	{
-		outState.putInt("yActuel", yActuel);
+		outState.putString("imageActuelle", imageActuelle);
 
 		outState.putInt("imageId", imageId);
 

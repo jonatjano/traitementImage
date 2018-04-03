@@ -13,19 +13,21 @@ public abstract class AsyncTaskAbstractProcess extends AsyncTask<ImageView, Bitm
 
     MainActivity mainActivity;
     TextView infoView;
-    ImageView image;
+    int image;
     int yDep;
+    int xDep;
 
-    public AsyncTaskAbstractProcess(TextView infoView, ImageView image, MainActivity mainActivity)
+    public AsyncTaskAbstractProcess(TextView infoView,MainActivity mainActivity)
     {
-        this(infoView, image, mainActivity, 0);
+        this(infoView, mainActivity, 0, 0, 0);
     }
 
-    public AsyncTaskAbstractProcess(TextView infoView, ImageView image, MainActivity mainActivity, int yDep)
+    public AsyncTaskAbstractProcess(TextView infoView,MainActivity mainActivity, int xDep, int yDep, int image)
     {
         this.mainActivity = mainActivity;
         this.infoView = infoView;
         this.image = image;
+        this.xDep = xDep;
         this.yDep = yDep;
     }
 
@@ -37,27 +39,40 @@ public abstract class AsyncTaskAbstractProcess extends AsyncTask<ImageView, Bitm
     @Override
     protected ImageView doInBackground(ImageView... imageView)
     {
+        ImageView iv = null;
+        if (this.image == 1)
+            iv = mainActivity.findViewById(R.id.image1);
+        else
+            iv = mainActivity.findViewById(R.id.image2);
 
-        Bitmap bit = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        Bitmap bit = ((BitmapDrawable)iv.getDrawable()).getBitmap();
         bit = bit.copy(bit.getConfig(), true);
 
         for (int i = yDep ; i < bit.getHeight() ; i ++)
         {
-            mainActivity.yActuel++;
-            for (int j = 0; j < bit.getWidth(); j++) {
+            for (int j = xDep; j < bit.getWidth(); j++) {
                 int pixel = bit.getPixel(j, i);
-
+                xDep = 0;
+                mainActivity.imageActuelle = image + ":" + j + ":" + i;
                 bit.setPixel(j, i, getPixelNewColor(pixel));
             }
             publishProgress(bit);
         }
 
-        return image;
+        mainActivity.imageActuelle = "-1";
+
+        return iv;
     }
 
     @Override
-    protected void onProgressUpdate(Bitmap... bitmap) {
-        image.setImageBitmap(bitmap[0]);
+    protected void onProgressUpdate(Bitmap... bitmap)
+    {
+        ImageView iv = null;
+        if (this.image == 1)
+            iv = mainActivity.findViewById(R.id.image1);
+        else
+            iv = mainActivity.findViewById(R.id.image2);
+        iv.setImageBitmap(bitmap[0]);
     }
 
     protected void onPostExecute(ImageView imageView) {
